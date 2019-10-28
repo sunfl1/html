@@ -1,37 +1,147 @@
-## Welcome to GitHub Pages
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>魔方</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.container{
+			width: 300px;
+			height: 300px;
+			/*border: 1px solid #001; 外边框*/
+			margin: 150px auto; /*auto居中*/
+			perspective: 20000px; /*设置视距*/
+		}
+		.box{
+			width: 300px;
+			height: 300px;
+			/*控制子元素保持3D转换*/
+			transform-style: preserve-3d;
 
-You can use the [editor on GitHub](https://github.com/sunfl1/html/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+			/*测试代码 */
+			/*transform: rotateX(45deg) rotateY(45deg);*/
+			animation: ro 4s linear infinite;
+		}
+		@keyframes ro{
+			0%{
+				transform: rotateX(0deg) rotateY(0deg);
+			}
+			100%{
+				transform: rotateX(360deg) rotateY(360deg);
+			}
+		}
+		.box-page{
+			width: 300px;
+			height: 300px;
+			/*位置初始化 绝对定位*/
+			position: absolute;
+			transform-style: preserve-3d;
+		}
+		.top{
+			/*background-color: red;*/
+			transform: translateZ(150px);
+		}
+		.bottom{
+			/*background-color: green;*/
+			transform: translateZ(-150px) /*rotateX(180deg)*/;
+		}
+		.left{
+			/*background-color: orange;*/
+			transform: translateX(-150px) rotateY(-90deg);/*旋转方向*/
+		}
+		.right{
+			/*background-color: pink;*/
+			transform: translateX(150px) rotateY(90deg);
+		}
+		.before{
+			/*background-color: blue;*/
+			transform: translateY(150px) rotateX(90deg);
+		}
+		.after{
+			/*background-color: yellow;*/
+			transform: translateY(-150px) rotateX(90deg);
+		}
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+		.box-page div:nth-child(1){
+			animation: a1 4.5s ease-in; 
+		}
+		.box-page div:nth-child(2){
+			animation: a1 4.5s ease-in 0.5s; 
+		}
+		.box-page div:nth-child(3){
+			animation: a1 4.5s ease-in 1s; 
+		}
+		.box-page div:nth-child(4){
+			animation: a1 4.5s ease-in 1.5s; 
+		}
+		.box-page div:nth-child(5){
+			animation: a1 4.5s ease-in 2s; 
+		}
+		.box-page div:nth-child(6){
+			animation: a1 4.5s ease-in 2.5s; 
+		}
+		.box-page div:nth-child(7){
+			animation: a1 4.5s ease-in 3s; 
+		}
+		.box-page div:nth-child(8){
+			animation: a1 4.5s ease-in 3.5s; 
+		}
+		.box-page div:nth-child(9){
+			animation: a1 4.5s ease-in 4s; 
+		}
 
-### Markdown
+		@keyframes a1{
+			0%{
+				transform: translateZ(0px) scale(1) rotateZ(0deg);
+			}
+			20%{
+				transform: translateZ(300px) scale(0) rotateZ(720deg);
+			}
+			90%{
+				transform: translateZ(300px) scale(0) rotateZ(720deg);
+			}
+			100%{
+				transform: translateZ(0px) scale(1) rotateZ(0deg);
+			}
+		}
+	</style>
+</head>
+<body>
+	<!-- 容器 -->
+	<div class="container">
+		<div class="box">
+			<div class="box-page top"></div>
+			<div class="box-page bottom"></div>
+			<div class="box-page left"></div>
+			<div class="box-page right"></div>
+			<div class="box-page before"></div>
+			<div class="box-page after"></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var arr = document.querySelectorAll(".box-page");
+		// 遍历6个面中的每一个面
+		for (var n = 0; n < arr.length ; n++) {
+			// 外层循环遍历行
+			for (var r = 0; r < 3; r++) {
+				// 内层循环遍历列
+				for (var c = 0; c < 3; c++) {
+					// 创建元素
+					var divs = document.createElement("div");
+					divs.style.cssText ="width: 100px;height: 100px;border: 2px solid #fff;box-sizing: border-box;background-color: red;position: absolute;background-image: url(img/a"+n+".jpg);background-size:300px 300px";
+					arr[n].appendChild(divs); /*把创建的元素加到dom树里*/
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+					divs.style.left = c*100+"px";
+					divs.style.top = r*100+"px";
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/sunfl1/html/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+					divs.style.backgroundPositionX = -c*100+"px";
+					divs.style.backgroundPositionY = -r*100+"px";
+				}
+			}
+		}
+	</script>
+</body>
+</html>
